@@ -1,0 +1,24 @@
+### get last Solana slot
+GET http://localhost:8080/api/slots/last
+
+### get transactios by last Solana slot
+GET http://localhost:8080/api/slots/232820360/transactions
+
+### get transactios by last Solana slot
+POST https://api.mainnet-beta.solana.com
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "getBlock",
+  "params": [
+    232820360,
+    {
+      "encoding": "json",
+      "transactionDetails": "full",
+      "rewards": false,
+      "maxSupportedTransactionVersion": 0
+    }
+  ]
+}
