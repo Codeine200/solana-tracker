@@ -4,11 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class SolanaTransactionResponseDto {
     private String sender;
     private String receiver;
-    private double amount;
+    private BigDecimal amount;
 }

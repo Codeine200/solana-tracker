@@ -1,15 +1,16 @@
 package com.github.codeine200.soltracker.service;
 
+import com.github.codeine200.soltracker.dto.response.SlotResponseDto;
+import com.github.codeine200.soltracker.dto.response.SolanaTransactionResponseDto;
 import com.github.codeine200.soltracker.mapper.SlotMapper;
+import com.github.codeine200.soltracker.remote.SolanaRpcClient;
 import com.github.codeine200.soltracker.remote.request.RpcRemoteRequest;
 import com.github.codeine200.soltracker.remote.response.BlockRemoteResponse;
-import com.github.codeine200.soltracker.dto.response.SlotResponseDto;
-import com.github.codeine200.soltracker.dto.response.SlotTransactionsResponseDto;
-import com.github.codeine200.soltracker.dto.response.SolanaTransactionResponseDto;
-import com.github.codeine200.soltracker.remote.SolanaRpcClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,7 @@ public class SolanaService {
 
     private final SolanaRpcClient solanaRpcClient;
     private final SlotMapper mapper;
-    private static final double LAMPORTS_PER_SOL = 1_000_000_000.0;
+    private static final BigDecimal LAMPORTS_PER_SOL = new BigDecimal("1000000000");
     private static final String SYSTEM_PROGRAM_ID = "11111111111111111111111111111111";
 
     public SlotResponseDto getLastSlot() {
@@ -57,14 +58,12 @@ public class SolanaService {
         }
 
         return response.getResult().getTransactions().stream()
-                // Пропускаем транзакции с ошибкой
                 .filter(tx -> tx.getMeta() != null && tx.getMeta().getErr() == null)
                 .flatMap(tx -> {
                     List<String> accountKeys = tx.getTransaction().getMessage().getAccountKeys();
                     List<Long> preBalances = tx.getMeta().getPreBalances();
                     List<Long> postBalances = tx.getMeta().getPostBalances();
 
-                    // Фильтруем инструкции, где участвует системный аккаунт
                     return tx.getTransaction().getMessage().getInstructions().stream()
                             .filter(instr -> {
                                 Integer programIdIndex = instr.getProgramIdIndex();
@@ -73,9 +72,8 @@ public class SolanaService {
                                 return SYSTEM_PROGRAM_ID.equals(programId);
                             })
                             .map(instr -> {
-                                // Берём индексы участников
                                 List<Integer> accounts = instr.getAccounts();
-                                if (accounts.size() < 2) return null; // должно быть хотя бы sender и receiver
+                                if (accounts.size() < 2) return null;
                                 int senderIdx = accounts.get(0);
                                 int receiverIdx = accounts.get(1);
 
@@ -84,7 +82,10 @@ public class SolanaService {
 
                                 long lamportsSent = (preBalances.get(senderIdx) - postBalances.get(senderIdx));
                                 long fee = tx.getMeta().getFee() != null ? tx.getMeta().getFee() : 0;
-                                double amount = (lamportsSent - fee) / LAMPORTS_PER_SOL;
+                                BigDecimal amount = BigDecimal.valueOf(lamportsSent)
+                                        .subtract(BigDecimal.valueOf(fee))
+                                        .divide(LAMPORTS_PER_SOL, 9, RoundingMode.DOWN);
+                                if (amount.compareTo(BigDecimal.ZERO) <= 0) return null;
 
                                 return new SolanaTransactionResponseDto(sender, receiver, amount);
                             })
