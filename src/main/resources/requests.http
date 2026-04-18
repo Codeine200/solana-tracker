@@ -1,8 +1,8 @@
 ### get last Solana slot
-GET http://localhost:8080/api/slots/last
+GET http://localhost:8081/api/slots/last
 
 ### get transactios by last Solana slot
-GET http://localhost:8080/api/slots/232820360/transactions
+GET http://localhost:8081/api/slots/414104421/transactions
 
 ### get transactios by last Solana slot
 POST https://api.mainnet-beta.solana.com
@@ -22,3 +22,6 @@ Content-Type: application/json
     }
   ]
 }
+
+### create Solana wallet
+POST http://localhost:8081/api/solana/wallets
