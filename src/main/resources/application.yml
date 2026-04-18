@@ -6,9 +6,9 @@ spring:
         name: SolTracker
 
     datasource:
-        url: jdbc:postgresql://localhost:5432/football_manager
-        username: football_admin
-        password: secret
+        url: jdbc:postgresql://localhost:5432/sol
+        username: soluser
+        password: test
         driver-class-name: org.postgresql.Driver
 
     jpa:
