@@ -1,4 +1,4 @@
-CREATE TABLE wallet (
+CREATE TABLE sol.wallet (
    id BIGSERIAL PRIMARY KEY,
    address VARCHAR(44) NOT NULL,
    private_key BYTEA NOT NULL,
@@ -8,4 +8,4 @@ CREATE TABLE wallet (
    CONSTRAINT uq_wallet_prefix_suffix UNIQUE (prefix, suffix)
 );
 
-CREATE INDEX idx_wallet_prefix_suffix ON wallet(prefix, suffix);
+CREATE INDEX idx_wallet_prefix_suffix ON sol.wallet(prefix, suffix);

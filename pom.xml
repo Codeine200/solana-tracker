@@ -96,6 +96,7 @@
             <artifactId>solanaj</artifactId>
             <version>1.17.0</version>
         </dependency>
+
     </dependencies>
     <dependencyManagement>
         <dependencies>

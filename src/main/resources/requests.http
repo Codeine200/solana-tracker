@@ -25,3 +25,14 @@ Content-Type: application/json
 
 ### create Solana wallet
 POST http://localhost:8081/api/solana/wallets
+
+### create Solana wallet by address
+POST http://localhost:8081/api/solana/wallets/by-address
+Content-Type: application/json
+
+{
+  "address": "3rt9NicPSxztngD5brK8nVZ6GqR5WiCtp3HPyJjgmi1p"
+}
+
+### get transactios history by Solana address
+GET http://localhost:8081/api/solana/wallets/3rt9NicPSxztngD5brK8nVZ6GqR5WiCtp3HPyJjgmi1p/history

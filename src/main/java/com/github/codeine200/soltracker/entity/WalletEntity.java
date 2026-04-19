@@ -5,7 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,7 +17,6 @@ public class WalletEntity {
 
     private String address;
 
-    @Lob
     @Column(name = "private_key")
     private byte[] privateKey;
 
