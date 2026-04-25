@@ -39,7 +39,7 @@ public class SolanaWalletService {
         PublicKey publicKey = new PublicKey(address);
         List<SignatureInformation> signatures = null;
         try {
-            signatures = client.getApi().getSignaturesForAddress(publicKey,1, Commitment.FINALIZED);
+            signatures = client.getApi().getSignaturesForAddress(publicKey,2, Commitment.FINALIZED);
         } catch (RpcException e) {
             throw new RuntimeException(e);
         }

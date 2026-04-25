@@ -35,4 +35,4 @@ Content-Type: application/json
 }
 
 ### get transactios history by Solana address
-GET http://localhost:8081/api/solana/wallets/3rt9NicPSxztngD5brK8nVZ6GqR5WiCtp3HPyJjgmi1p/history
+GET http://localhost:8081/api/solana/wallets/6ifBF7TnetvYsN3amWZtMotiKempJDwiqqKvKJsiEW9N/history

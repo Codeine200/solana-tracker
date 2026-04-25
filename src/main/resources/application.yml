@@ -5,12 +5,6 @@ spring:
     application:
         name: SolTracker
 
-    datasource:
-        url: jdbc:postgresql://localhost:5432/sol
-        username: soluser
-        password: test
-        driver-class-name: org.postgresql.Driver
-
     jpa:
         open-in-view: false
         properties:
@@ -28,3 +22,17 @@ spring:
         type: caffeine
         caffeine:
             spec: maximumSize=500,expireAfterWrite=10m
+
+app:
+    datasource:
+        postgres:
+            url: jdbc:postgresql://localhost:5432/app
+            username: postgres
+            password: postgres
+            driver-class-name: org.postgresql.Driver
+
+        clickhouse:
+            url: jdbc:clickhouse://localhost:8123/default
+            username: default
+            password:
+            driver-class-name: com.clickhouse.jdbc.ClickHouseDriver

@@ -97,6 +97,12 @@
             <version>1.17.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.clickhouse</groupId>
+            <artifactId>clickhouse-jdbc</artifactId>
+            <version>0.6.3</version>
+        </dependency>
+
     </dependencies>
     <dependencyManagement>
         <dependencies>
