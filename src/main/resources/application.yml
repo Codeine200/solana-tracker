@@ -5,6 +5,12 @@ spring:
     application:
         name: SolTracker
 
+    datasource:
+        url: jdbc:postgresql://localhost:5432/sol
+        username: postgres
+        password: postgres
+        driver-class-name: org.postgresql.Driver
+
     jpa:
         open-in-view: false
         properties:
@@ -17,6 +23,9 @@ spring:
 
     flyway:
         schemas: sol
+        enabled: true
+        locations: classpath:db/postgres/migration
+
 
     cache:
         type: caffeine
@@ -25,14 +34,8 @@ spring:
 
 app:
     datasource:
-        postgres:
-            url: jdbc:postgresql://localhost:5432/app
-            username: postgres
-            password: postgres
-            driver-class-name: org.postgresql.Driver
-
         clickhouse:
             url: jdbc:clickhouse://localhost:8123/default
             username: default
-            password:
+            password: 123456
             driver-class-name: com.clickhouse.jdbc.ClickHouseDriver
