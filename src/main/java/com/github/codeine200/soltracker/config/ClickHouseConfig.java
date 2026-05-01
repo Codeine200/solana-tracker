@@ -1,5 +1,6 @@
 package com.github.codeine200.soltracker.config;
 
+import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.autoconfigure.DataSourceProperties;
@@ -20,9 +21,18 @@ public class ClickHouseConfig {
 
     @Bean
     public DataSource clickhouseDataSource() {
-        return clickhouseProperties()
+        HikariDataSource ds = clickhouseProperties()
                 .initializeDataSourceBuilder()
+                .type(HikariDataSource.class)
                 .build();
+
+        ds.setMaximumPoolSize(10);
+        ds.setMinimumIdle(2);
+        ds.setIdleTimeout(30000);
+        ds.setMaxLifetime(1800000);
+        ds.setConnectionTimeout(30000);
+
+        return ds;
     }
 
     @Bean
