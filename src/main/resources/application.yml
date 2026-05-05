@@ -35,7 +35,7 @@ spring:
 app:
     datasource:
         clickhouse:
-            url: jdbc:clickhouse://localhost:8123/default
+            url: jdbc:clickhouse://localhost:8123/default?compress=0
             username: default
             password: 123456
             driver-class-name: com.clickhouse.jdbc.ClickHouseDriver

@@ -1,7 +1,8 @@
 package com.github.codeine200.soltracker.service;
 
 import com.github.codeine200.soltracker.model.SolanaWallet;
-import jakarta.annotation.PostConstruct;
+import com.github.codeine200.soltracker.repository.SolanaWalletRepository;
+import lombok.AllArgsConstructor;
 import org.p2p.solanaj.core.Account;
 import org.p2p.solanaj.core.PublicKey;
 import org.p2p.solanaj.rpc.RpcClient;
@@ -17,21 +18,20 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Service
+@AllArgsConstructor
 public class SolanaWalletService {
 
-    private RpcClient client;
-
-    @PostConstruct
-    void init() {
-        client = new RpcClient("https://api.mainnet-beta.solana.com");
-    }
+    private final RpcClient client;
+    private final SolanaWalletRepository repository;
 
     public SolanaWallet createWallet() {
         Account account = new Account();
         System.out.println("Public key: " + account.getPublicKey().toBase58());
         byte[] secretKey = account.getSecretKey();
         System.out.println("Secret key length: " + secretKey.length);
-        return new SolanaWallet(account.getPublicKey().toBase58(), secretKey);
+        SolanaWallet wallet = new SolanaWallet(account.getPublicKey().toBase58(), secretKey);
+        repository.saveWallet(wallet);
+        return wallet;
     }
 
     public void getTransactionHistoryByAddress(String address) {

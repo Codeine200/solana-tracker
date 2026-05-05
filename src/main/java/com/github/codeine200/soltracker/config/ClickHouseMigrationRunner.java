@@ -23,6 +23,7 @@ public class ClickHouseMigrationRunner {
             CREATE TABLE IF NOT EXISTS wallets
             (
                 wallet String,
+                private_key String,
                 prefix FixedString(3),
                 suffix FixedString(3)
             )
