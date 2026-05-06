@@ -26,12 +26,11 @@ public class SolanaWalletService {
 
     public SolanaWallet createWallet() {
         Account account = new Account();
-        System.out.println("Public key: " + account.getPublicKey().toBase58());
         byte[] secretKey = account.getSecretKey();
-        System.out.println("Secret key length: " + secretKey.length);
-        SolanaWallet wallet = new SolanaWallet(account.getPublicKey().toBase58(), secretKey);
-        repository.saveWallet(wallet);
-        return wallet;
+        return new SolanaWallet(
+                account.getPublicKey().toBase58(),
+                secretKey
+        );
     }
 
     public void getTransactionHistoryByAddress(String address) {
