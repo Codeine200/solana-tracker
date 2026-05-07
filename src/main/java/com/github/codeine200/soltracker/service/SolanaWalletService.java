@@ -1,7 +1,6 @@
 package com.github.codeine200.soltracker.service;
 
 import com.github.codeine200.soltracker.model.SolanaWallet;
-import com.github.codeine200.soltracker.repository.SolanaWalletRepository;
 import lombok.AllArgsConstructor;
 import org.p2p.solanaj.core.Account;
 import org.p2p.solanaj.core.PublicKey;
@@ -22,7 +21,6 @@ import java.util.concurrent.atomic.AtomicLong;
 public class SolanaWalletService {
 
     private final RpcClient client;
-    private final SolanaWalletRepository repository;
 
     public SolanaWallet createWallet() {
         Account account = new Account();
